@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "orichalcum:orichalcum_block",
+    "orichalcum:raw_orichalcum_block",
+    "orichalcum:orichalcum_ore"
+  ]
+}

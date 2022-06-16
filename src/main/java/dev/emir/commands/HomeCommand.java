@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.emir.data.IPlayerPersistentData;
 import dev.emir.mixins.PlayerEntityMixin;
+import dev.emir.render.RenderTickSimulator;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -28,7 +29,7 @@ public class HomeCommand {
         try {
             final ServerCommandSource source = ctx.getSource();
 
-            final ServerPlayerEntity self = source.getPlayer(); // If not a player than the command ends
+            final ServerPlayerEntity self = source.getPlayer();
 
             Vec3d home = ((IPlayerPersistentData) self).getHomeLocation();
             self.requestTeleport(home.getX(), home.getY(), home.getZ());
@@ -43,7 +44,7 @@ public class HomeCommand {
         final ServerCommandSource source = ctx.getSource();
         try {
 
-            final PlayerEntity self = source.getPlayer(); // If not a player than the command ends
+            final PlayerEntity self = source.getPlayer();
             Vec3d pos = self.getPos();
             ((IPlayerPersistentData) self).setHomeLocation(pos);
 

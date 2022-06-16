@@ -1,10 +1,12 @@
 package dev.emir;
 
 import dev.emir.commands.CommandRegister;
+import dev.emir.context.GameContext;
 import dev.emir.features.FeaturesRegister;
 import dev.emir.register.Element;
 import dev.emir.register.Register;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -20,6 +22,7 @@ public class Main implements ModInitializer {
 
     public static final String MOD_ID = "orichalcum";
     public static final Logger LOGGER = LogManager.getLogger("Orichalcum");
+    private static final GameContext context = new GameContext();
 
     @Override
     public void onInitialize() {
@@ -27,6 +30,10 @@ public class Main implements ModInitializer {
         registerBootstrap("dev.emir.blocks", Registry.BLOCK);
         FeaturesRegister.registerBootstrap();
         CommandRegister.register();
+    }
+
+    public static GameContext getContext() {
+        return context;
     }
 
     public void registerBootstrap(String package_name, Registry<?> registry) {
@@ -53,7 +60,7 @@ public class Main implements ModInitializer {
                                 Item.BLOCK_ITEMS.put(((BlockItem) type).getBlock(), (Item) type);
                             }
                             //TODO: Add anothers types
-                            LOGGER.info("Registered " + type + " to registry from " + element.getCanonicalName());
+                            LOGGER.info("Registered " + type + " to registry from " + field.getName());
                         } catch (IllegalAccessException e) {
                             throw new AssertionError(e);
                         }

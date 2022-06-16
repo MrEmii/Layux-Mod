@@ -4,6 +4,11 @@
   "package": "dev.emir.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ClientMixin",
+    "GameRendererMixin",
+    "PlayerRenderMixin",
+    "RenderTickMixin",
+    "ProjectileMixin",
     "PlayerEntityMixin"
   ],
   "client": [],

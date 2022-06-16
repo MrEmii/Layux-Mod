@@ -6,4 +6,9 @@ public interface IPlayerPersistentData {
     void setHomeLocation(Vec3d pos);
 
     Vec3d getHomeLocation();
+
+    void setLocation(Vec3d pos);
+
+    Vec3d getLocation();
+
 }

@@ -1,6 +1,7 @@
 package dev.emir.mixins;
 
 import dev.emir.data.IPlayerPersistentData;
+import dev.emir.render.RenderTickSimulator;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,9 +16,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerPersistentData {
     private Vec3d homeLocation;
+    private Vec3d location;
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    public Vec3d getLocation() {
+        return location;
+    }
+
+    public void setLocation(Vec3d location) {
+        this.location = location;
     }
 
     public Vec3d getHomeLocation() {
@@ -35,6 +45,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerP
             nbt.putDouble("HomeY", homeLocation.y);
             nbt.putDouble("HomeZ", homeLocation.z);
         }
+
+        if (location != null) {
+            nbt.putDouble("TeleportX", location.x);
+            nbt.putDouble("TeleportY", location.y);
+            nbt.putDouble("TeleportZ", location.z);
+        }
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
@@ -44,5 +60,18 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerP
         double z = nbt.getDouble("HomeZ");
 
         setHomeLocation(new Vec3d(x, y, z));
+
+        double tX = nbt.getDouble("TeleportX");
+        double tY = nbt.getDouble("TeleportY");
+        double tZ = nbt.getDouble("TeleportZ");
+
+        setLocation(new Vec3d(tX, tY, tZ));
+
+
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;tick()V", shift = At.Shift.AFTER))
+    private void tick(CallbackInfo info) {
+        RenderTickSimulator.onUpdate();
     }
 }

@@ -1,10 +1,7 @@
 package dev.emir;
 
-import dev.emir.blocks.OrichalcumBlocks;
 import dev.emir.commands.CommandRegister;
 import dev.emir.features.FeaturesRegister;
-import dev.emir.features.OrichalcumOreOverworld;
-import dev.emir.items.OrichalcumItems;
 import dev.emir.register.Element;
 import dev.emir.register.Register;
 import net.fabricmc.api.ModInitializer;
@@ -12,6 +9,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
@@ -20,7 +19,7 @@ import java.util.Arrays;
 public class Main implements ModInitializer {
 
     public static final String MOD_ID = "orichalcum";
-
+    public static final Logger LOGGER = LogManager.getLogger("Orichalcum");
 
     @Override
     public void onInitialize() {
@@ -54,6 +53,7 @@ public class Main implements ModInitializer {
                                 Item.BLOCK_ITEMS.put(((BlockItem) type).getBlock(), (Item) type);
                             }
                             //TODO: Add anothers types
+                            LOGGER.info("Registered " + type + " to registry from " + element.getCanonicalName());
                         } catch (IllegalAccessException e) {
                             throw new AssertionError(e);
                         }

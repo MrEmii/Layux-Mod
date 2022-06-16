@@ -5,5 +5,7 @@
   "itemGroup.minecraft.orichalcum": "Orichalcum",
   "block.orichalcum.orichalcum_block": "Orichalcum Block",
   "block.orichalcum.orichalcum_ore": "Orichalcum Ore",
-  "block.orichalcum.raw_orichalcum_block": "Raw Orichalcum Block"
+  "block.orichalcum.raw_orichalcum_block": "Raw Orichalcum Block",
+  "home.set": "[Orichalcum] Home set at %d",
+  "home.teleport": "[Orichalcum] Welcome to home!"
 }
